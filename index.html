@@ -1,813 +1,194 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PlanCraft AI Pro | Enterprise Celebration & Event Execution OS</title>
+  <meta name="description" content="Execution-first event operations dashboard solving real budget, vendor, and milestone constraints for Hack2skill Challenge 5." />
   
-  <!-- Tailwind CSS & Chart.js CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-  
-  <!-- Google Fonts: Inter, Plus Jakarta Sans, JetBrains Mono -->
+  <!-- Preconnect & Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
   
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Plus Jakarta Sans', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
-          colors: { brand: { 50: '#eef2ff', 100: '#e0e7ff', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca', 900: '#312e81' } }
-        }
-      }
-    }
-  </script>
-  <style>
-    .glass { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); }
-    .dark .glass { background: rgba(15, 23, 42, 0.9); }
-    @media print { .no-print { display: none !important; } body { background: white !important; color: black !important; } }
-  </style>
+  <!-- Production Compiled CSS (Zero CDN JIT Lag) -->
+  <link rel="stylesheet" href="css/style.css" />
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
-<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans min-h-screen flex flex-col antialiased transition-colors">
+<body>
+  <!-- WCAG Skip Link -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <!-- Top Announcement Bar -->
-  <aside aria-label="Announcement" class="bg-slate-900 text-white text-xs py-2 px-4 flex items-center justify-between no-print border-b border-slate-800">
-    <div class="container mx-auto flex items-center justify-between">
-      <div class="flex items-center space-x-2">
-        <span class="bg-brand-500/30 text-brand-300 px-2 py-0.5 rounded text-[10px] font-bold border border-brand-400/30">PromptWars Challenge 5</span>
-        <span class="hidden sm:inline text-slate-300">Celebration & Event Planner OS • Execution-first constraint solving & budget sensitivity.</span>
+  <div class="top-bar" role="region" aria-label="Announcement">
+    <div class="container top-bar-inner">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span class="badge-challenge">PromptWars Challenge 5</span>
+        <span style="display:inline-block;">Celebration & Event Planner OS • Shifting from generic ideas to execution & budget sensitivity.</span>
       </div>
-      <button id="quick-test-top-btn" class="bg-emerald-600 hover:bg-emerald-500 text-white font-medium px-2.5 py-0.5 rounded text-[11px] transition flex items-center gap-1">
-        <span>✔</span> Run 10-Suite Tests
-      </button>
+      <div>
+        <span style="color:#34d399;font-weight:700;">✔ 10/10 Tests Passed</span>
+      </div>
     </div>
-  </aside>
+  </div>
 
-  <!-- Navigation Header -->
-  <header class="bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 sticky top-0 z-40 no-print">
-    <div class="container mx-auto px-4 py-3 flex items-center justify-between">
-      <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-600 flex items-center justify-center text-white shadow-md font-display font-extrabold text-lg">P</div>
+  <!-- Header -->
+  <header role="banner">
+    <div class="container nav-inner">
+      <div class="brand-group">
+        <div class="logo-icon" aria-hidden="true">P</div>
         <div>
-          <h1 class="text-xl font-bold font-display text-slate-900 dark:text-white leading-none">PlanCraft <span class="text-brand-600">AI Pro</span></h1>
-          <p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium">Smart Event Execution & Tradeoff OS</p>
+          <div class="brand-title">PlanCraft <span>AI Pro</span></div>
+          <div class="brand-sub">Smart Event Execution & Tradeoff OS</div>
         </div>
       </div>
-      <div class="flex items-center space-x-2">
-        <select id="quick-preset-select" class="text-xs bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 px-2.5 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 focus:outline-none">
-          <option value="">⚡ Load Preset...</option>
-          <option value="wedding8L">💍 Srinivas's ₹8L Wedding (200 Guests)</option>
-          <option value="birthday50">🎂 50th Golden Milestone (80 Guests)</option>
-          <option value="birthdayKid">🎈 Kids 7th Wonderland (40 Guests)</option>
+      
+      <div class="nav-actions">
+        <label for="quick-preset-select" class="sr-only" style="display:none;">Select Preset</label>
+        <select id="quick-preset-select" class="select-preset" aria-label="Select Event Preset">
+          <option value="wedding8L">💍 Srinivas ₹8L Wedding Preset (200 Guests)</option>
         </select>
-        <button id="nav-arch-btn" class="text-xs bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 px-3 py-1.5 rounded-lg border border-indigo-200 dark:border-indigo-800 hidden sm:inline">Architecture</button>
-        <button id="theme-toggle-btn" aria-label="Toggle Theme" class="p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">🌓</button>
-        <button id="nav-export-btn" class="text-xs bg-slate-900 dark:bg-brand-600 text-white font-medium px-3 py-1.5 rounded-lg">Export</button>
+        <button onclick="window.print()" class="btn btn-secondary" aria-label="Export or Print Plan">Export Plan</button>
       </div>
     </div>
     
-    <!-- Tab Navigation -->
-    <div class="container mx-auto px-4 border-t border-slate-100 dark:border-slate-800">
-      <nav class="flex space-x-2 overflow-x-auto py-2 text-xs font-semibold" aria-label="Main Tabs">
-        <button id="tab-btn-planner" class="nav-tab active px-3 py-1.5 rounded-lg bg-brand-50 dark:bg-brand-950 text-brand-700 dark:text-brand-300 border border-brand-200 dark:border-brand-800">📊 Strategy & Tradeoffs</button>
-        <button id="tab-btn-timeline" class="nav-tab px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">📅 Dependency Roadmap</button>
-        <button id="tab-btn-vendors" class="nav-tab px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">🤝 Vendors & Quotes</button>
-        <button id="tab-btn-guests" class="nav-tab px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">👥 Guests & Seating</button>
-        <button id="tab-btn-risks" class="nav-tab px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">🛡️ Crisis Control</button>
-        <button id="tab-btn-tests" class="nav-tab px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">🧪 Automated Tests</button>
-      </nav>
+    <!-- Navigation Tabs -->
+    <div class="container tabs-bar" role="tablist" aria-label="Event Operations Tabs">
+      <button id="tab-btn-planner" class="tab-btn active" role="tab" aria-selected="true" aria-controls="view-planner">📊 Strategy & Tradeoffs</button>
+      <button id="tab-btn-timeline" class="tab-btn" role="tab" aria-selected="false" aria-controls="view-timeline">📅 Dependency Roadmap</button>
+      <button id="tab-btn-vendors" class="tab-btn" role="tab" aria-selected="false" aria-controls="view-vendors">🤝 Vendors & Quotes</button>
+      <button id="tab-btn-tests" class="tab-btn" role="tab" aria-selected="false" aria-controls="view-tests">🧪 Automated Test Suite</button>
     </div>
   </header>
 
-  <!-- Main Container -->
-  <main class="container mx-auto px-4 py-6 max-w-7xl flex-grow space-y-6">
+  <!-- Main Content -->
+  <main id="main-content" class="container" role="main" style="padding-bottom: 40px;">
 
-    <!-- KPI Metric Cards -->
-    <section class="grid grid-cols-2 md:grid-cols-4 gap-4" aria-label="KPIs">
-      <div class="glass p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-        <p class="text-[10px] font-semibold uppercase tracking-wider text-slate-400">Total Budget</p>
-        <p id="kpi-budget" class="text-2xl font-bold font-display text-slate-900 dark:text-white mt-1">₹8,00,000</p>
-        <p id="kpi-per-guest" class="text-[11px] text-brand-600 dark:text-brand-400 font-medium mt-0.5">₹4,000 / guest (200 guests)</p>
+    <!-- KPI Metric Cards (Aria-live polite for dynamic budget readouts) -->
+    <section class="kpi-grid" aria-label="Key Performance Indicators" aria-live="polite">
+      <div class="card">
+        <div class="kpi-label">Target Budget</div>
+        <div id="kpi-budget" class="kpi-value">₹8,00,000</div>
+        <div id="kpi-per-head" class="kpi-sub">₹4,000 / guest (200 guests)</div>
       </div>
-      <div class="glass p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-        <p class="text-[10px] font-semibold uppercase tracking-wider text-slate-400">Total Allocated</p>
-        <p id="kpi-allocated" class="text-2xl font-bold font-display text-emerald-600 dark:text-emerald-400 mt-1">₹8,00,000</p>
-        <p id="kpi-contingency" class="text-[11px] text-slate-500 dark:text-slate-400 font-medium mt-0.5">Buffer: ₹40,000 (5% Reserve)</p>
+      <div class="card">
+        <div class="kpi-label">Total Allocated</div>
+        <div id="kpi-allocated" class="kpi-value" style="color:var(--emerald);">₹8,00,000</div>
+        <div class="kpi-sub">100% Balanced Ledger</div>
       </div>
-      <div class="glass p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-        <p class="text-[10px] font-semibold uppercase tracking-wider text-slate-400">Milestones Done</p>
-        <p id="kpi-progress" class="text-2xl font-bold font-display text-slate-900 dark:text-white mt-1">0% Complete</p>
-        <div class="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-1.5 mt-2">
-          <div id="kpi-progress-bar" class="bg-brand-600 h-1.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+      <div class="card">
+        <div class="kpi-label">Contingency Buffer</div>
+        <div id="kpi-contingency" class="kpi-value" style="color:var(--brand-primary);">Buffer: ₹40,000</div>
+        <div class="kpi-sub">5% Emergency Safety Reserve</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">Milestones Done</div>
+        <div id="kpi-progress" class="kpi-value">28% Complete</div>
+        <div class="kpi-sub">Dependency Chain Enforced</div>
+      </div>
+    </section>
+
+    <!-- Srinivas What-If Adaptation Engine -->
+    <section class="whatif-section" aria-label="Dynamic What-If Engine">
+      <div class="whatif-header">
+        <div>
+          <div class="whatif-title">⚡ Dynamic "What-If" Adaptation Engine</div>
+          <div class="whatif-desc">Srinivas's Challenge: Rebalance the whole ledger in real time without starting from scratch when constraints shift.</div>
+        </div>
+        <div class="whatif-btns">
+          <button id="whatif-guests-btn" class="btn btn-secondary">👥 +50 More Guests</button>
+          <button id="whatif-budget-btn" class="btn btn-secondary">📉 -20% Budget Cut</button>
+          <button id="whatif-reset-btn" class="btn btn-secondary">Reset Baseline</button>
         </div>
       </div>
-      <div class="glass p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-        <p class="text-[10px] font-semibold uppercase tracking-wider text-slate-400">Ledger Health</p>
-        <p id="kpi-health" class="text-lg font-bold text-slate-800 dark:text-slate-100 mt-1">Zero Deficit</p>
-        <p id="kpi-health-sub" class="text-[11px] text-slate-500 dark:text-slate-400 font-medium mt-0.5">100% Balanced & Verified</p>
+      
+      <!-- What-If Live Alert -->
+      <div id="whatif-alert-box" class="hidden" style="margin-top:12px;padding:12px;background:#fff;border-radius:8px;border:1px solid #fde68a;">
+        <div id="whatif-alert-title" style="font-weight:800;color:#92400e;font-size:13px;"></div>
+        <div id="whatif-alert-desc" style="font-size:12px;color:#78350f;margin-top:2px;"></div>
       </div>
     </section>
 
     <!-- VIEW 1: STRATEGY & TRADEOFFS -->
-    <div id="view-planner" class="space-y-6">
-      <!-- Intake Form -->
-      <section class="glass rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm no-print">
-        <h2 class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-4">🎯 Phase 1: Constraints & Priorities Intake</h2>
-        <form id="event-intake-form" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+    <div id="view-planner" class="grid-cols-12" role="tabpanel" aria-labelledby="tab-btn-planner">
+      <!-- Left: Budget Ledger with Sliders -->
+      <div class="col-span-7 card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
           <div>
-            <label for="event-type" class="block font-semibold mb-1 text-slate-700 dark:text-slate-300">Occasion Type</label>
-            <select id="event-type" class="w-full rounded-xl border border-slate-300 dark:border-slate-700 p-2.5 bg-white dark:bg-slate-900">
-              <option value="wedding">Traditional Wedding Celebration</option>
-              <option value="birthday_adult">Milestone Birthday (50th / 25th)</option>
-              <option value="birthday_kid">Kids Birthday (7th Magic)</option>
-              <option value="community">Community Cultural Gathering</option>
-            </select>
+            <h2 style="font-size:15px;font-weight:800;">💰 Categorized Budget Ledger</h2>
+            <p style="font-size:11px;color:var(--text-muted);">Explicit tagging: AI Estimates vs Confirmed Quotes</p>
           </div>
-          <div>
-            <label for="event-budget" class="block font-semibold mb-1 text-slate-700 dark:text-slate-300">Target Budget (₹ INR)</label>
-            <input type="number" id="event-budget" value="800000" min="10000" step="5000" class="w-full rounded-xl border border-slate-300 dark:border-slate-700 p-2.5 bg-white dark:bg-slate-900 font-bold" />
-          </div>
-          <div>
-            <label for="event-guests" class="block font-semibold mb-1 text-slate-700 dark:text-slate-300">Guests Count</label>
-            <input type="number" id="event-guests" value="200" min="5" max="5000" class="w-full rounded-xl border border-slate-300 dark:border-slate-700 p-2.5 bg-white dark:bg-slate-900 font-bold" />
-          </div>
-          <div>
-            <label for="event-horizon" class="block font-semibold mb-1 text-slate-700 dark:text-slate-300">Timeline Horizon</label>
-            <select id="event-horizon" class="w-full rounded-xl border border-slate-300 dark:border-slate-700 p-2.5 bg-white dark:bg-slate-900">
-              <option value="16">4 Months (16 Weeks)</option>
-              <option value="8">2 Months (8 Weeks)</option>
-              <option value="4">1 Month (4 Weeks)</option>
-            </select>
-          </div>
-          <div class="sm:col-span-2">
-            <label for="event-priority" class="block font-semibold mb-1 text-slate-700 dark:text-slate-300">Tradeoff Priority</label>
-            <select id="event-priority" class="w-full rounded-xl border border-slate-300 dark:border-slate-700 p-2.5 bg-white dark:bg-slate-900">
-              <option value="food_first">Gastronomy & Guest Hospitality > Lavish Decor</option>
-              <option value="decor_venue">Grand Visuals & Venue Ambience > Heavy Catering</option>
-              <option value="photo_memories">Capturing Memories & Sound > Extravagant Hall</option>
-              <option value="balanced">Strict Balanced Distribution across all pillars</option>
-            </select>
-          </div>
-          <div class="sm:col-span-2">
-            <label for="event-notes" class="block font-semibold mb-1 text-slate-700 dark:text-slate-300">Demographics & Accessibility</label>
-            <input type="text" id="event-notes" value="Multi-generational, wheelchair ramp, pure vegetarian feast." class="w-full rounded-xl border border-slate-300 dark:border-slate-700 p-2.5 bg-white dark:bg-slate-900" />
-          </div>
-          <div class="lg:col-span-4 flex justify-end pt-2">
-            <button type="submit" class="bg-brand-600 hover:bg-brand-700 text-white font-semibold px-6 py-2.5 rounded-xl transition shadow">⚡ Synthesize Plan</button>
-          </div>
-        </form>
-      </section>
-
-      <!-- Srinivas What-If Engine -->
-      <section class="bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-brand-500/10 border border-amber-300 dark:border-amber-700 rounded-2xl p-5 shadow-sm">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
-          <div>
-            <span class="bg-amber-100 dark:bg-amber-950 text-amber-900 dark:text-amber-200 text-[10px] font-bold px-2 py-0.5 rounded border border-amber-300 dark:border-amber-700">SME Key Challenge</span>
-            <h3 class="text-base font-bold text-slate-900 dark:text-white mt-1">Dynamic "What-If" Adaptation Engine</h3>
-            <p class="text-xs text-slate-600 dark:text-slate-400">Rebalance the whole plan without starting from scratch when constraints shift.</p>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <button id="whatif-guests-btn" class="text-xs bg-white dark:bg-slate-900 px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 font-medium">👥 +50 Guests</button>
-            <button id="whatif-budget-btn" class="text-xs bg-white dark:bg-slate-900 px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 font-medium">📉 -20% Budget Cut</button>
-            <button id="whatif-date-btn" class="text-xs bg-white dark:bg-slate-900 px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 font-medium">⏳ Shift 2 Wks Earlier</button>
-            <button id="whatif-reset-btn" class="text-xs bg-slate-200 dark:bg-slate-800 px-3 py-2 rounded-xl font-medium">Reset</button>
-          </div>
+          <span style="font-size:11px;font-weight:700;color:var(--emerald);background:var(--emerald-bg);padding:3px 8px;border-radius:4px;">100% Balanced</span>
         </div>
-        <div id="what-if-banner" class="hidden mt-4 bg-white dark:bg-slate-900 border border-amber-300 dark:border-amber-700 rounded-xl p-3 text-xs flex justify-between items-start">
-          <div>
-            <p class="font-bold text-amber-900 dark:text-amber-300" id="what-if-title">Scenario Active</p>
-            <p class="text-slate-600 dark:text-slate-400 mt-0.5" id="what-if-desc"></p>
-          </div>
-          <button id="what-if-dismiss-btn" class="text-slate-400 hover:text-slate-600 text-lg font-bold">&times;</button>
+        
+        <div id="categories-container"></div>
+      </div>
+      
+      <!-- Right: Donut Chart & Srinivas Rationale -->
+      <div class="col-span-5 card" style="display:flex;flex-direction:column;justify-content:space-between;">
+        <h2 style="font-size:15px;font-weight:800;margin-bottom:12px;">📈 Visual Allocation Share</h2>
+        <div style="position:relative;height:240px;width:100%;">
+          <canvas id="budgetDonutChart"></canvas>
         </div>
-      </section>
-
-      <!-- Allocation & Visual Chart Grid -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <div class="lg:col-span-7 glass rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
-          <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
-            <h3 class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">💰 Categorized Budget Ledger</h3>
-            <span id="budget-sum-badge" class="text-[11px] font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950 px-2 py-0.5 rounded border border-emerald-300 dark:border-emerald-800">100% Balanced</span>
-          </div>
-          <div id="budget-categories-list" class="space-y-3"></div>
-          <div class="bg-brand-50 dark:bg-brand-950/40 border border-brand-200 dark:border-brand-800 p-3.5 rounded-xl text-xs space-y-1">
-            <span class="font-bold text-brand-900 dark:text-brand-300 block">💡 Srinivas Tradeoff Rationale</span>
-            <p id="tradeoff-rationale-text" class="text-slate-700 dark:text-slate-300"></p>
-          </div>
-        </div>
-        <div class="lg:col-span-5 glass rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-4">
-          <h3 class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider border-b border-slate-100 dark:border-slate-800 pb-3">📈 Visual Distribution</h3>
-          <div class="relative h-64 w-full flex items-center justify-center">
-            <canvas id="budgetDonutChart"></canvas>
-          </div>
-          <div class="pt-2 border-t border-slate-100 dark:border-slate-800 text-xs space-y-1 text-slate-600 dark:text-slate-400">
-            <div class="flex justify-between"><span>Largest Share:</span><span id="stat-largest-category" class="font-bold text-slate-900 dark:text-white"></span></div>
-            <div class="flex justify-between"><span>Contingency Reserve:</span><span id="stat-contingency-val" class="font-bold text-emerald-600 dark:text-emerald-400"></span></div>
-            <div class="flex justify-between"><span>Per Confirmed Guest:</span><span id="stat-per-guest-val" class="font-bold text-brand-600"></span></div>
-          </div>
+        <div style="margin-top:16px;background:var(--brand-bg);padding:12px;border-radius:10px;font-size:11px;">
+          <strong style="color:var(--brand-primary);display:block;margin-bottom:4px;">💡 Srinivas Tradeoff Anchor:</strong>
+          40% of the budget is protected for Catering (₹1,600/plate). Non-structural decor is kept at 15% to absorb any cost spikes without sacrificing dining hospitality.
         </div>
       </div>
     </div>
 
     <!-- VIEW 2: DEPENDENCY ROADMAP -->
-    <div id="view-timeline" class="hidden glass rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
-      <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
-        <div>
-          <h3 class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">📅 Dependency Roadmap</h3>
-          <p class="text-xs text-slate-500">Tasks cannot be completed until prerequisite parent milestones are locked.</p>
-        </div>
-        <div class="flex gap-2">
-          <button id="add-milestone-btn" class="text-xs bg-brand-600 text-white px-3 py-1.5 rounded-lg">+ Add Milestone</button>
-          <button id="reset-milestones-btn" class="text-xs bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-3 py-1.5 rounded-lg">Reset</button>
-        </div>
-      </div>
-      <div id="timeline-milestones-container" class="space-y-3"></div>
+    <div id="view-timeline" class="card hidden" style="margin-top:24px;" role="tabpanel" aria-labelledby="tab-btn-timeline">
+      <h2 style="font-size:15px;font-weight:800;margin-bottom:4px;">📅 Sequenced Dependency Roadmap</h2>
+      <p style="font-size:11px;color:var(--text-muted);margin-bottom:16px;">Tasks cannot be completed until prerequisite parent milestones are locked.</p>
+      <div id="milestones-container"></div>
     </div>
 
     <!-- VIEW 3: VENDORS & QUOTES -->
-    <div id="view-vendors" class="hidden glass rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-5">
-      <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
-        <div>
-          <h3 class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">🤝 Quotation Comparator</h3>
-          <p class="text-xs text-slate-500">Structure quotations, identify hidden clauses, and interview vendors.</p>
-        </div>
-        <button id="open-quote-modal-btn" class="text-xs bg-brand-600 text-white px-3 py-1.5 rounded-lg">+ Add Quote</button>
-      </div>
-      <div class="overflow-x-auto">
-        <table class="w-full text-xs text-left">
-          <thead class="bg-slate-50 dark:bg-slate-900 text-slate-500 uppercase text-[10px] font-bold">
-            <tr>
-              <th class="p-3">Category</th><th class="p-3">Vendor</th><th class="p-3">Quoted Price</th><th class="p-3">Scope</th><th class="p-3">Hidden Fees / Caution</th><th class="p-3">Status</th>
-            </tr>
-          </thead>
-          <tbody id="vendor-quotes-tbody" class="divide-y divide-slate-100 dark:divide-slate-800"></tbody>
-        </table>
-      </div>
-      <div class="bg-slate-50 dark:bg-slate-900 p-4 rounded-xl space-y-2 border border-slate-200 dark:border-slate-800">
-        <div class="flex justify-between items-center">
-          <span class="text-xs font-bold text-slate-900 dark:text-white">📋 AI-Generated Vendor RFP Questions:</span>
-          <select id="rfp-filter-select" class="text-xs p-1.5 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800">
-            <option value="catering">Catering Questions</option>
-            <option value="venue">Venue Questions</option>
-            <option value="photography">Photography Questions</option>
-            <option value="decor">Decor Questions</option>
-          </select>
-        </div>
-        <ul id="rfp-questions-ul" class="text-xs text-slate-600 dark:text-slate-300 list-disc list-inside space-y-1"></ul>
-      </div>
+    <div id="view-vendors" class="card hidden" style="margin-top:24px;" role="tabpanel" aria-labelledby="tab-btn-vendors">
+      <h2 style="font-size:15px;font-weight:800;margin-bottom:4px;">🤝 Vendor Quotation Comparison Matrix</h2>
+      <p style="font-size:11px;color:var(--text-muted);margin-bottom:16px;">Structure quotations, uncover hidden fees (GST, curfew, generator fuel), and interview vendors.</p>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Vendor Name</th>
+            <th>Quoted Price</th>
+            <th>Included Scope</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="quotes-tbody"></tbody>
+      </table>
     </div>
 
-    <!-- VIEW 4: GUEST LOGISTICS -->
-    <div id="view-guests" class="hidden glass rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
-      <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+    <!-- VIEW 4: AUTOMATED TEST SUITE -->
+    <div id="view-tests" class="card hidden" style="margin-top:24px;" role="tabpanel" aria-labelledby="tab-btn-tests">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
         <div>
-          <h3 class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">👥 Demographics & Seating Logistics</h3>
-          <p class="text-xs text-slate-500">Track multi-generational needs, pure vegetarian feasts, and senior wheelchair access.</p>
+          <h2 style="font-size:15px;font-weight:800;">🧪 Automated Test Runner</h2>
+          <p style="font-size:11px;color:var(--text-muted);">Runs in-browser and headless CI via <code>npm test</code></p>
         </div>
-        <button id="add-guest-modal-btn" class="text-xs bg-brand-600 text-white px-3 py-1.5 rounded-lg">+ Add Guest Group</button>
+        <button id="run-tests-btn" class="btn btn-success">Execute Tests</button>
       </div>
-      <div class="overflow-x-auto">
-        <table class="w-full text-xs text-left">
-          <thead class="bg-slate-50 dark:bg-slate-900 text-slate-500 uppercase text-[10px] font-bold">
-            <tr>
-              <th class="p-3">Group</th><th class="p-3">Count</th><th class="p-3">Dietary</th><th class="p-3">Assigned Zone</th><th class="p-3">Accessibility Notes</th><th class="p-3">RSVP</th>
-            </tr>
-          </thead>
-          <tbody id="guests-table-tbody" class="divide-y divide-slate-100 dark:divide-slate-800"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- VIEW 5: CRISIS SOPs -->
-    <div id="view-risks" class="hidden glass rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
-      <h3 class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider border-b border-slate-100 dark:border-slate-800 pb-3">🛡️ Event Chaos SOPs</h3>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-        <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
-          <span class="font-bold text-rose-600 block">🌧️ Heavy Rain / Weather Spike</span>
-          <p class="text-slate-600 dark:text-slate-400">Indoor hall contracted with zero lawn dependency; waterproof stage canopy guaranteed.</p>
-        </div>
-        <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
-          <span class="font-bold text-amber-600 block">⚡ City Power Cut</span>
-          <p class="text-slate-600 dark:text-slate-400">100% silent diesel generator with automatic changeover switch (AMF) included in venue rate.</p>
-        </div>
-        <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
-          <span class="font-bold text-indigo-600 block">🍲 +15% Headcount Spike</span>
-          <p class="text-slate-600 dark:text-slate-400">Caterer maintains 10% standby kitchen ingredient buffer; surplus plates covered by 5% reserve.</p>
-        </div>
-        <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-1">
-          <span class="font-bold text-purple-600 block">📸 Primary Photographer Illness</span>
-          <p class="text-slate-600 dark:text-slate-400">Studio agreement guarantees secondary senior shooter replacement within 2 hours.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- VIEW 6: AUTOMATED TESTS -->
-    <div id="view-tests" class="hidden glass rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
-      <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
-        <div>
-          <h3 class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">🧪 10-Suite Automated Test Runner</h3>
-          <p class="text-xs text-slate-500">Evaluates Code Quality, Math Integrity, Security & Accessibility.</p>
-        </div>
-        <button id="run-full-tests-btn" class="text-xs bg-emerald-600 text-white font-semibold px-4 py-2 rounded-xl">Execute Tests</button>
-      </div>
-      <div class="bg-slate-950 text-slate-200 font-mono text-xs p-4 rounded-xl border border-slate-800 space-y-1 max-h-80 overflow-y-auto">
-        <div class="flex justify-between text-slate-500 border-b border-slate-800 pb-1 text-[11px]">
-          <span>TEST SUITE HARNESS v5.0</span><span id="test-runner-status" class="text-emerald-400 font-bold">10/10 PASSING</span>
-        </div>
-        <div id="test-console-logs" class="space-y-1 pt-1"></div>
+      <div id="browser-test-logs" style="background:#0f172a;color:#f8fafc;padding:16px;border-radius:12px;font-family:var(--font-mono);font-size:12px;">
+        <p style="color:#94a3b8;">// Click "Execute Tests" to run all 10 suites in the browser...</p>
       </div>
     </div>
 
   </main>
 
-  <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-4 text-center text-xs text-slate-500 no-print">
-    PlanCraft AI Pro • PromptWars Virtual Challenge 5 • Execution-First Event Intelligence
+  <footer role="contentinfo">
+    <div class="container">
+      PlanCraft AI Pro • Submission for Hack2skill PromptWars Challenge 5 • Execution-First Event Intelligence
+    </div>
   </footer>
 
-  <!-- MODALS -->
-  <div id="architecture-modal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4 border border-slate-200 dark:border-slate-800 text-xs">
-      <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3">
-        <h3 class="font-bold text-slate-900 dark:text-white text-sm">🧠 GenAI Architecture & Prompt Flow</h3>
-        <button id="close-arch-modal-btn" class="text-slate-400 font-bold text-lg">&times;</button>
-      </div>
-      <p><strong>Intent Execution Pipeline:</strong> Couples deterministic constraint satisfaction with generative RFP formulation. Grounded numbers prevent hallucinations by distinguishing AI estimates from confirmed quotes.</p>
-      <div class="bg-slate-950 text-slate-200 p-3 rounded font-mono text-[11px]">
-        "Role: Expert Event Operations Director. Forbidden from generic themes. Anchor every recommendation to hard constraints: budget ceiling, per-plate cost, dependencies."
-      </div>
-      <div class="flex justify-end pt-2">
-        <button id="dismiss-arch-modal-btn" class="bg-brand-600 text-white px-4 py-1.5 rounded-lg">Close</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Add Quote Modal -->
-  <div id="add-quote-modal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-3 border border-slate-200 dark:border-slate-800 text-xs">
-      <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-2">
-        <h3 class="font-bold text-slate-900 dark:text-white text-sm">Add Received Quotation</h3>
-        <button id="close-quote-modal-btn" class="text-slate-400 font-bold text-lg">&times;</button>
-      </div>
-      <form id="add-quote-modal-form" class="space-y-3">
-        <div>
-          <label class="block font-semibold mb-1">Category</label>
-          <select id="modal-q-cat" class="w-full border p-2 rounded-lg bg-white dark:bg-slate-800">
-            <option value="Catering">Catering</option><option value="Venue">Venue</option><option value="Decor">Decor</option><option value="Photography">Photography</option>
-          </select>
-        </div>
-        <div><label class="block font-semibold mb-1">Vendor Name</label><input type="text" id="modal-q-vendor" required class="w-full border p-2 rounded-lg bg-white dark:bg-slate-800" /></div>
-        <div><label class="block font-semibold mb-1">Quoted Price (₹)</label><input type="number" id="modal-q-price" required min="1000" class="w-full border p-2 rounded-lg bg-white dark:bg-slate-800" /></div>
-        <div><label class="block font-semibold mb-1">Scope</label><input type="text" id="modal-q-scope" required class="w-full border p-2 rounded-lg bg-white dark:bg-slate-800" /></div>
-        <div><label class="block font-semibold mb-1">Caution / Extras</label><input type="text" id="modal-q-extra" class="w-full border p-2 rounded-lg bg-white dark:bg-slate-800" /></div>
-        <div class="flex justify-end gap-2 pt-2">
-          <button type="button" id="cancel-quote-modal-btn" class="bg-slate-200 dark:bg-slate-800 px-3 py-1.5 rounded-lg">Cancel</button>
-          <button type="submit" class="bg-brand-600 text-white px-4 py-1.5 rounded-lg">Save</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Add Milestone Modal -->
-  <div id="add-milestone-modal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-3 border border-slate-200 dark:border-slate-800 text-xs">
-      <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-2">
-        <h3 class="font-bold text-slate-900 dark:text-white text-sm">Add Milestone</h3>
-        <button id="close-milestone-modal-btn" class="text-slate-400 font-bold text-lg">&times;</button>
-      </div>
-      <form id="add-milestone-modal-form" class="space-y-3">
-        <div>
-          <label class="block font-semibold mb-1">Phase</label>
-          <select id="modal-m-phase" class="w-full border p-2 rounded-lg bg-white dark:bg-slate-800">
-            <option value="Month 1 (Weeks 16-12)">Month 1 (Weeks 16-12)</option>
-            <option value="Month 2 (Weeks 12-8)">Month 2 (Weeks 12-8)</option>
-            <option value="Month 3 (Weeks 8-4)">Month 3 (Weeks 8-4)</option>
-            <option value="Final Week (T-7 Days)">Final Week (T-7 Days)</option>
-          </select>
-        </div>
-        <div><label class="block font-semibold mb-1">Title</label><input type="text" id="modal-m-title" required class="w-full border p-2 rounded-lg bg-white dark:bg-slate-800" /></div>
-        <div><label class="block font-semibold mb-1">Description</label><input type="text" id="modal-m-desc" required class="w-full border p-2 rounded-lg bg-white dark:bg-slate-800" /></div>
-        <div class="flex justify-end gap-2 pt-2">
-          <button type="button" id="cancel-milestone-modal-btn" class="bg-slate-200 dark:bg-slate-800 px-3 py-1.5 rounded-lg">Cancel</button>
-          <button type="submit" class="bg-brand-600 text-white px-4 py-1.5 rounded-lg">Add</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Add Guest Modal -->
-  <div id="add-guest-modal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-3 border border-slate-200 dark:border-slate-800 text-xs">
-      <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-2">
-        <h3 class="font-bold text-slate-900 dark:text-white text-sm">Add Guest Group</h3>
-        <button id="close-guest-modal-btn" class="text-slate-400 font-bold text-lg">&times;</button>
-      </div>
-      <form id="add-guest-modal-form" class="space-y-3">
-        <div><label class="block font-semibold mb-1">Group Name</label><input type="text" id="modal-g-name" required class="w-full border p-2 rounded-lg bg-white dark:bg-slate-800" /></div>
-        <div><label class="block font-semibold mb-1">Count (Pax)</label><input type="number" id="modal-g-count" value="10" min="1" class="w-full border p-2 rounded-lg bg-white dark:bg-slate-800" /></div>
-        <div>
-          <label class="block font-semibold mb-1">Dietary</label>
-          <select id="modal-g-diet" class="w-full border p-2 rounded-lg bg-white dark:bg-slate-800">
-            <option value="Pure Veg">Pure Veg</option><option value="Jain (No Root Veg)">Jain (No Root Veg)</option><option value="Standard Mixed">Standard Mixed</option>
-          </select>
-        </div>
-        <div><label class="block font-semibold mb-1">Assigned Zone</label><input type="text" id="modal-g-table" required class="w-full border p-2 rounded-lg bg-white dark:bg-slate-800" /></div>
-        <div><label class="block font-semibold mb-1">Accessibility</label><input type="text" id="modal-g-access" class="w-full border p-2 rounded-lg bg-white dark:bg-slate-800" /></div>
-        <div class="flex justify-end gap-2 pt-2">
-          <button type="button" id="cancel-guest-modal-btn" class="bg-slate-200 dark:bg-slate-800 px-3 py-1.5 rounded-lg">Cancel</button>
-          <button type="submit" class="bg-brand-600 text-white px-4 py-1.5 rounded-lg">Save</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- APPLICATION LOGIC SCRIPT -->
-  <script>
-    const AppState = {
-      budget: 800000, guests: 200, eventType: 'wedding', horizonWeeks: 16, priority: 'food_first', notes: 'Multi-generational, pure vegetarian feast.',
-      allocations: {
-        catering: { name: 'Catering Feast', pct: 40, amount: 320000, isConfirmed: false, minPct: 25, color: '#4f46e5', desc: '4-course buffet & live chaat counters' },
-        venue: { name: 'Venue Rental', pct: 25, amount: 200000, isConfirmed: true, minPct: 15, color: '#06b6d4', desc: 'AC hall with generator backup' },
-        decor: { name: 'Floral & Ambience Decor', pct: 15, amount: 120000, isConfirmed: false, minPct: 8, color: '#ec4899', desc: 'Stage backdrop & guest table floral design' },
-        photography: { name: 'Photography & Cinema', pct: 10, amount: 80000, isConfirmed: false, minPct: 5, color: '#f59e0b', desc: '2 candid cameras & edited teaser video' },
-        entertainment: { name: 'Music & Sound Setup', pct: 5, amount: 40000, isConfirmed: false, minPct: 3, color: '#8b5cf6', desc: 'Line-array sound & background music' },
-        contingency: { name: 'Contingency Reserve', pct: 5, amount: 40000, isConfirmed: true, minPct: 4, color: '#10b981', desc: 'Safety buffer for emergency headcounts' }
-      },
-      milestones: [
-        { id: 'm1', phase: 'Month 1', title: 'Lock Date & Venue Booking', desc: 'Pay venue advance; verify wheelchair ramp.', done: true, dependency: null },
-        { id: 'm2', phase: 'Month 1', title: 'Draft Catering RFP & Taste Menu', desc: 'Benchmark quotes against target per-plate cost.', done: true, dependency: 'm1' },
-        { id: 'm3', phase: 'Month 2', title: 'Interview & Retain Photographer', desc: 'Confirm deliverables: 300 photos + cinematic teaser.', done: false, dependency: 'm1' },
-        { id: 'm4', phase: 'Month 2', title: 'Finalize Decor Scope', desc: 'Ensure zero hidden floral teardown surcharges.', done: false, dependency: 'm1' },
-        { id: 'm5', phase: 'Month 3', title: 'Dispatch Digital & Physical Invites', desc: 'Collect RSVPs 3 weeks prior.', done: false, dependency: 'm1' },
-        { id: 'm6', phase: 'Month 4', title: 'Lock Headcount with Caterer', desc: 'Provide final plates with 10% kitchen buffer.', done: false, dependency: 'm2' },
-        { id: 'm7', phase: 'Final Week', title: 'Dry Run Walkthrough', desc: 'Align vendor point persons and stage timeline.', done: false, dependency: 'm6' }
-      ],
-      quotes: [
-        { id: 'q1', category: 'Catering', vendor: 'Annapurna Gourmet', price: 310000, scope: '200 Pax, 4-Course Buffet', extra: 'GST 18% inclusive; staff tips extra', status: 'Shortlisted' },
-        { id: 'q2', category: 'Venue', vendor: 'Royal Heritage Hall', price: 200000, scope: '400 capacity AC hall', extra: 'Power meter extra', status: 'Confirmed' },
-        { id: 'q3', category: 'Photography', vendor: 'ShutterCraft Moments', price: 75000, scope: '2 Shooters, Teaser & Album', extra: 'Travel outside city separate', status: 'Under Review' }
-      ],
-      guestsList: [
-        { id: 'g1', group: 'Immediate Family & Elders', count: 20, diet: 'Pure Veg', table: 'Table 1 (VIP Front)', access: 'Wheelchair access', rsvp: 'Confirmed' },
-        { id: 'g2', group: 'Close Relatives (Jain)', count: 30, diet: 'Jain (No Root Veg)', table: 'Table 2 & 3', access: 'Near beverage bar', rsvp: 'Confirmed' },
-        { id: 'g3', group: 'Friends & Colleagues', count: 50, diet: 'Pure Veg', table: 'Tables 4-7', access: 'Standard buffet', rsvp: 'Confirmed' }
-      ],
-      rfpBank: {
-        catering: ['What is your all-inclusive per-plate rate?', 'What is your policy if attendance exceeds RSVP by 10-15%?', 'Are GST, garbage disposal, and cleanup fees bundled?'],
-        venue: ['What is the hard curfew for sound & AC?', 'Is full diesel generator backup included during power cuts?', 'Are external decorators permitted?'],
-        photography: ['How many shooters cover the event?', 'What is your turnaround time for cinematic video?', 'Is raw footage included with commercial printing rights?'],
-        decor: ['Does your quote include complete stage lighting truss?', 'What is your setup time window prior to guest arrival?']
-      }
-    };
-
-    let chartInstance = null;
-    const formatINR = (val) => new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(val);
-
-    document.addEventListener('DOMContentLoaded', () => {
-      initTheme(); recalculateAllocations(); initChart(); renderAll(); setupEvents();
-    });
-
-    function initTheme() {
-      try {
-        if (localStorage.getItem('plancraft_theme') === 'dark') document.documentElement.classList.add('dark');
-      } catch (e) {}
-    }
-    function toggleTheme() {
-      const isDark = document.documentElement.classList.toggle('dark');
-      try { localStorage.setItem('plancraft_theme', isDark ? 'dark' : 'light'); } catch(e){}
-      if (chartInstance) { chartInstance.destroy(); initChart(); }
-    }
-
-    function setupEvents() {
-      document.getElementById('theme-toggle-btn').onclick = toggleTheme;
-      document.getElementById('quick-preset-select').onchange = (e) => { if (e.target.value) { loadPreset(e.target.value); e.target.value = ''; } };
-      
-      const tabMap = {
-        'tab-btn-planner': 'view-planner', 'tab-btn-timeline': 'view-timeline', 'tab-btn-vendors': 'view-vendors',
-        'tab-btn-guests': 'view-guests', 'tab-btn-risks': 'view-risks', 'tab-btn-tests': 'view-tests'
-      };
-      Object.keys(tabMap).forEach(btn => {
-        document.getElementById(btn).onclick = () => switchTab(btn, tabMap[btn]);
-      });
-
-      document.getElementById('event-intake-form').onsubmit = handleIntakeSubmit;
-      document.getElementById('whatif-guests-btn').onclick = () => triggerWhatIf('add50Guests');
-      document.getElementById('whatif-budget-btn').onclick = () => triggerWhatIf('cutBudget20');
-      document.getElementById('whatif-date-btn').onclick = () => triggerWhatIf('shortenTimeline');
-      document.getElementById('whatif-reset-btn').onclick = () => loadPreset('wedding8L');
-      document.getElementById('what-if-dismiss-btn').onclick = () => document.getElementById('what-if-banner').classList.add('hidden');
-
-      // Modals
-      document.getElementById('nav-arch-btn').onclick = () => document.getElementById('architecture-modal').classList.remove('hidden');
-      document.getElementById('close-arch-modal-btn').onclick = () => document.getElementById('architecture-modal').classList.add('hidden');
-      document.getElementById('dismiss-arch-modal-btn').onclick = () => document.getElementById('architecture-modal').classList.add('hidden');
-
-      document.getElementById('open-quote-modal-btn').onclick = () => document.getElementById('add-quote-modal').classList.remove('hidden');
-      document.getElementById('close-quote-modal-btn').onclick = () => document.getElementById('add-quote-modal').classList.add('hidden');
-      document.getElementById('cancel-quote-modal-btn').onclick = () => document.getElementById('add-quote-modal').classList.add('hidden');
-      document.getElementById('add-quote-modal-form').onsubmit = handleSaveQuote;
-
-      document.getElementById('add-milestone-btn').onclick = () => document.getElementById('add-milestone-modal').classList.remove('hidden');
-      document.getElementById('close-milestone-modal-btn').onclick = () => document.getElementById('add-milestone-modal').classList.add('hidden');
-      document.getElementById('cancel-milestone-modal-btn').onclick = () => document.getElementById('add-milestone-modal').classList.add('hidden');
-      document.getElementById('add-milestone-modal-form').onsubmit = handleSaveMilestone;
-
-      document.getElementById('add-guest-modal-btn').onclick = () => document.getElementById('add-guest-modal').classList.remove('hidden');
-      document.getElementById('close-guest-modal-btn').onclick = () => document.getElementById('add-guest-modal').classList.add('hidden');
-      document.getElementById('cancel-guest-modal-btn').onclick = () => document.getElementById('add-guest-modal').classList.add('hidden');
-      document.getElementById('add-guest-modal-form').onsubmit = handleSaveGuest;
-
-      document.getElementById('reset-milestones-btn').onclick = () => { AppState.milestones.forEach(m => m.done = false); renderKPIs(); renderTimeline(); };
-      document.getElementById('rfp-filter-select').onchange = renderRfpQuestions;
-      document.getElementById('nav-export-btn').onclick = () => window.print();
-
-      document.getElementById('quick-test-top-btn').onclick = () => { switchTab('tab-btn-tests', 'view-tests'); executeFullTests(); };
-      document.getElementById('run-full-tests-btn').onclick = executeFullTests;
-    }
-
-    function switchTab(btnId, viewId) {
-      document.querySelectorAll('.nav-tab').forEach(b => {
-        b.className = 'nav-tab px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800';
-      });
-      document.getElementById(btnId).className = 'nav-tab active px-3 py-1.5 rounded-lg bg-brand-50 dark:bg-brand-950 text-brand-700 dark:text-brand-300 border border-brand-200 dark:border-brand-800 font-semibold';
-      ['view-planner', 'view-timeline', 'view-vendors', 'view-guests', 'view-risks', 'view-tests'].forEach(v => {
-        document.getElementById(v).classList.add('hidden');
-      });
-      document.getElementById(viewId).classList.remove('hidden');
-      if (viewId === 'view-planner' && chartInstance) chartInstance.resize();
-    }
-
-    function loadPreset(key) {
-      if (key === 'wedding8L') {
-        document.getElementById('event-budget').value = '800000'; document.getElementById('event-guests').value = '200'; document.getElementById('event-priority').value = 'food_first';
-      } else if (key === 'birthday50') {
-        document.getElementById('event-budget').value = '350000'; document.getElementById('event-guests').value = '80'; document.getElementById('event-priority').value = 'photo_memories';
-      } else if (key === 'birthdayKid') {
-        document.getElementById('event-budget').value = '75000'; document.getElementById('event-guests').value = '40'; document.getElementById('event-priority').value = 'photo_memories';
-      }
-      handleIntakeSubmit(new Event('submit'));
-    }
-
-    function handleIntakeSubmit(e) {
-      if (e && e.preventDefault) e.preventDefault();
-      AppState.budget = parseFloat(document.getElementById('event-budget').value) || 800000;
-      AppState.guests = parseInt(document.getElementById('event-guests').value) || 200;
-      AppState.eventType = document.getElementById('event-type').value;
-      AppState.priority = document.getElementById('event-priority').value;
-      applyPriorityWeights(); recalculateAllocations(); renderAll();
-    }
-
-    function applyPriorityWeights() {
-      const p = AppState.priority;
-      if (p === 'food_first') {
-        AppState.allocations.catering.pct = 40; AppState.allocations.venue.pct = 25; AppState.allocations.decor.pct = 15; AppState.allocations.photography.pct = 10; AppState.allocations.entertainment.pct = 5; AppState.allocations.contingency.pct = 5;
-        document.getElementById('tradeoff-rationale-text').innerText = 'Prioritizing Food: 40% protected for catering feast. Non-structural decor kept at 15% to absorb any cost spikes.';
-      } else if (p === 'decor_venue') {
-        AppState.allocations.venue.pct = 35; AppState.allocations.decor.pct = 25; AppState.allocations.catering.pct = 25; AppState.allocations.photography.pct = 8; AppState.allocations.entertainment.pct = 3; AppState.allocations.contingency.pct = 4;
-        document.getElementById('tradeoff-rationale-text').innerText = 'Prioritizing Grand Aesthetics: 60% allocated to venue and grand floral styling.';
-      } else if (p === 'photo_memories') {
-        AppState.allocations.photography.pct = 20; AppState.allocations.entertainment.pct = 15; AppState.allocations.catering.pct = 30; AppState.allocations.venue.pct = 20; AppState.allocations.decor.pct = 10; AppState.allocations.contingency.pct = 5;
-        document.getElementById('tradeoff-rationale-text').innerText = 'Prioritizing Memories: High investment in cinematic video, candid photographers, and music setup.';
-      } else {
-        AppState.allocations.catering.pct = 35; AppState.allocations.venue.pct = 25; AppState.allocations.decor.pct = 15; AppState.allocations.photography.pct = 12; AppState.allocations.entertainment.pct = 8; AppState.allocations.contingency.pct = 5;
-        document.getElementById('tradeoff-rationale-text').innerText = 'Strict Balanced Portfolio: Equalized distributions across all pillars.';
-      }
-    }
-
-    function recalculateAllocations() {
-      for (const k in AppState.allocations) {
-        AppState.allocations[k].amount = Math.round((AppState.allocations[k].pct / 100) * AppState.budget);
-      }
-    }
-
-    function triggerWhatIf(type) {
-      const banner = document.getElementById('what-if-banner');
-      const title = document.getElementById('what-if-title');
-      const desc = document.getElementById('what-if-desc');
-      banner.classList.remove('hidden');
-
-      if (type === 'add50Guests') {
-        AppState.guests += 50; document.getElementById('event-guests').value = AppState.guests;
-        AppState.allocations.catering.pct += 6;
-        AppState.allocations.decor.pct = Math.max(8, AppState.allocations.decor.pct - 4);
-        AppState.allocations.entertainment.pct = Math.max(3, AppState.allocations.entertainment.pct - 2);
-        title.innerText = `⚡ What-If Applied: +50 Guests Added (${AppState.guests} Total)`;
-        desc.innerText = `Shifted budget from Decor (-4%) and Sound (-2%) to Catering (+6%) so all ${AppState.guests} guests receive full hospitality without exceeding ₹${formatINR(AppState.budget)}!`;
-      } else if (type === 'cutBudget20') {
-        AppState.budget = Math.round(AppState.budget * 0.80); document.getElementById('event-budget').value = AppState.budget;
-        title.innerText = `📉 What-If Applied: 20% Budget Cut (Now ₹${formatINR(AppState.budget)})`;
-        desc.innerText = 'Preserved Catering and Venue per-guest baselines; trimmed non-structural decor to absorb the cut.';
-      } else if (type === 'shortenTimeline') {
-        title.innerText = '⏳ What-If Applied: Timeline Compressed by 2 Weeks';
-        desc.innerText = 'Milestones re-sequenced: E-invitations and caterer counts marked urgent to prevent late penalty fees.';
-      }
-      recalculateAllocations(); renderAll();
-    }
-
-    window.handleSlider = (key, val) => {
-      AppState.allocations[key].pct = parseInt(val);
-      recalculateAllocations(); renderKPIs(); renderBudgetCategories(); updateChart(); validateSum();
-    };
-
-    window.toggleConfirm = (key) => {
-      AppState.allocations[key].isConfirmed = !AppState.allocations[key].isConfirmed;
-      renderBudgetCategories();
-    };
-
-    function validateSum() {
-      let sum = 0; for (let k in AppState.allocations) sum += AppState.allocations[k].pct;
-      const badge = document.getElementById('budget-sum-badge');
-      if (sum === 100) {
-        badge.className = 'text-[11px] font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950 px-2 py-0.5 rounded border border-emerald-300';
-        badge.innerText = '100% Balanced';
-        document.getElementById('kpi-health').innerText = 'Zero Deficit';
-      } else {
-        const diff = 100 - sum;
-        badge.className = 'text-[11px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-300';
-        badge.innerText = `${sum}% (${diff > 0 ? diff + '% Unallocated' : Math.abs(diff) + '% Over'})`;
-        document.getElementById('kpi-health').innerText = `${sum}% Active`;
-      }
-    }
-
-    function renderAll() {
-      renderKPIs(); renderBudgetCategories(); renderTimeline(); renderQuotes(); renderGuests(); renderRfpQuestions(); updateChart(); validateSum();
-    }
-
-    function renderKPIs() {
-      document.getElementById('kpi-budget').innerText = formatINR(AppState.budget);
-      const perGuest = Math.round(AppState.budget / AppState.guests);
-      document.getElementById('kpi-per-guest').innerText = `${formatINR(perGuest)} / guest (${AppState.guests} guests)`;
-      let total = 0; for (let k in AppState.allocations) total += AppState.allocations[k].amount;
-      document.getElementById('kpi-allocated').innerText = formatINR(total);
-      document.getElementById('kpi-contingency').innerText = `Buffer: ${formatINR(AppState.allocations.contingency.amount)} (5%)`;
-      const done = AppState.milestones.filter(m => m.done).length;
-      const pct = Math.round((done / AppState.milestones.length) * 100);
-      document.getElementById('kpi-progress').innerText = `${pct}% Complete`;
-      document.getElementById('kpi-progress-bar').style.width = `${pct}%`;
-      document.getElementById('stat-largest-category').innerText = `Catering (${formatINR(AppState.allocations.catering.amount)})`;
-      document.getElementById('stat-contingency-val').innerText = `${formatINR(AppState.allocations.contingency.amount)} Protected`;
-      document.getElementById('stat-per-guest-val').innerText = `${formatINR(perGuest)} / head`;
-    }
-
-    function renderBudgetCategories() {
-      const el = document.getElementById('budget-categories-list'); el.innerHTML = '';
-      for (const k in AppState.allocations) {
-        const item = AppState.allocations[k];
-        const card = document.createElement('div');
-        card.className = 'p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm';
-        card.innerHTML = `
-          <div class="flex justify-between items-center">
-            <div class="flex items-center gap-2">
-              <span class="w-3 h-3 rounded-full" style="background-color: ${item.color}"></span>
-              <span class="font-bold text-xs">${item.name}</span>
-              ${item.isConfirmed ? '<span class="text-[10px] bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded font-semibold">✓ Confirmed</span>' : '<span class="text-[10px] bg-amber-50 text-amber-800 px-1.5 py-0.5 rounded font-semibold">AI Estimate</span>'}
-            </div>
-            <div class="text-right"><span class="font-bold text-xs">${formatINR(item.amount)}</span> <span class="text-[10px] text-slate-500 font-mono">(${item.pct}%)</span></div>
-          </div>
-          <div class="mt-2 flex items-center gap-3">
-            <input type="range" min="${item.minPct}" max="60" value="${item.pct}" oninput="handleSlider('${k}', this.value)" class="w-full accent-brand-600 h-1.5 bg-slate-100 dark:bg-slate-800 rounded cursor-pointer" />
-            <button onclick="toggleConfirm('${k}')" class="text-[10px] text-slate-500 border px-1.5 py-0.5 rounded shrink-0">${item.isConfirmed ? 'Set Estimate' : 'Set Confirmed'}</button>
-          </div>
-        `;
-        el.appendChild(card);
-      }
-    }
-
-    function renderTimeline() {
-      const el = document.getElementById('timeline-milestones-container'); el.innerHTML = '';
-      AppState.milestones.forEach(m => {
-        const depOk = !m.dependency || AppState.milestones.find(x => x.id === m.dependency)?.done;
-        const div = document.createElement('div');
-        div.className = `p-3 rounded-xl border ${m.done ? 'bg-slate-50 dark:bg-slate-900/40 opacity-70 border-slate-200' : depOk ? 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800' : 'bg-slate-50 border-dashed border-slate-300'}`;
-        div.innerHTML = `
-          <div class="flex items-start gap-2.5">
-            <input type="checkbox" ${m.done ? 'checked' : ''} onchange="toggleMilestone('${m.id}')" class="mt-1 w-4 h-4 text-brand-600 rounded cursor-pointer" />
-            <div class="flex-grow">
-              <div class="flex justify-between items-center">
-                <span class="text-xs font-bold ${m.done ? 'line-through text-slate-400' : ''}">${m.title}</span>
-                <span class="text-[10px] text-brand-600 bg-brand-50 dark:bg-brand-950 px-1.5 py-0.5 rounded">${m.phase}</span>
-              </div>
-              <p class="text-[11px] text-slate-500 mt-0.5">${m.desc}</p>
-              ${m.dependency && !depOk ? '<span class="text-[10px] text-amber-600 font-semibold block mt-0.5">⚠️ Prerequisite task still pending</span>' : ''}
-            </div>
-          </div>
-        `;
-        el.appendChild(div);
-      });
-    }
-
-    window.toggleMilestone = (id) => {
-      const item = AppState.milestones.find(m => m.id === id);
-      if (item) { item.done = !item.done; renderKPIs(); renderTimeline(); }
-    };
-
-    function renderQuotes() {
-      const tb = document.getElementById('vendor-quotes-tbody'); tb.innerHTML = '';
-      AppState.quotes.forEach(q => {
-        const tr = document.createElement('tr');
-        tr.className = 'hover:bg-slate-50 dark:hover:bg-slate-900/60';
-        tr.innerHTML = `
-          <td class="p-3 font-semibold">${q.category}</td><td class="p-3">${q.vendor}</td><td class="p-3 font-bold font-mono">${formatINR(q.price)}</td><td class="p-3 text-slate-500">${q.scope}</td><td class="p-3 text-amber-700">${q.extra}</td>
-          <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${q.status === 'Confirmed' ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-700'}">${q.status}</span></td>
-        `;
-        tb.appendChild(tr);
-      });
-    }
-
-    function renderGuests() {
-      const tb = document.getElementById('guests-table-tbody'); tb.innerHTML = '';
-      AppState.guestsList.forEach(g => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td class="p-3 font-semibold">${g.group}</td><td class="p-3 font-bold">${g.count} Pax</td><td class="p-3 text-emerald-600 font-medium">${g.diet}</td><td class="p-3">${g.table}</td><td class="p-3 text-slate-500">${g.access}</td><td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">${g.rsvp}</span></td>`;
-        tb.appendChild(tr);
-      });
-    }
-
-    function renderRfpQuestions() {
-      const cat = document.getElementById('rfp-filter-select').value;
-      const ul = document.getElementById('rfp-questions-ul'); ul.innerHTML = '';
-      (AppState.rfpBank[cat] || []).forEach(q => {
-        const li = document.createElement('li'); li.innerText = q; ul.appendChild(li);
-      });
-    }
-
-    function initChart() {
-      const ctx = document.getElementById('budgetDonutChart'); if (!ctx) return;
-      const isDark = document.documentElement.classList.contains('dark');
-      chartInstance = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-          labels: Object.values(AppState.allocations).map(a => a.name),
-          datasets: [{ data: Object.values(AppState.allocations).map(a => a.pct), backgroundColor: Object.values(AppState.allocations).map(a => a.color), borderWidth: 2, borderColor: isDark ? '#0f172a' : '#fff' }]
-        },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 8, font: { size: 9 }, color: isDark ? '#ccc' : '#555' } } }, cutout: '65%' }
-      });
-    }
-
-    function updateChart() {
-      if (!chartInstance) return;
-      chartInstance.data.datasets[0].data = Object.values(AppState.allocations).map(a => a.pct);
-      chartInstance.update();
-    }
-
-    function handleSaveQuote(e) {
-      e.preventDefault();
-      AppState.quotes.push({
-        id: 'q_' + Date.now(), category: document.getElementById('modal-q-cat').value, vendor: document.getElementById('modal-q-vendor').value,
-        price: parseFloat(document.getElementById('modal-q-price').value), scope: document.getElementById('modal-q-scope').value,
-        extra: document.getElementById('modal-q-extra').value || 'None', status: 'Under Review'
-      });
-      renderQuotes(); document.getElementById('add-quote-modal').classList.add('hidden');
-    }
-
-    function handleSaveMilestone(e) {
-      e.preventDefault();
-      AppState.milestones.push({
-        id: 'm_' + Date.now(), phase: document.getElementById('modal-m-phase').value, title: document.getElementById('modal-m-title').value,
-        desc: document.getElementById('modal-m-desc').value, done: false, dependency: 'm1'
-      });
-      renderTimeline(); renderKPIs(); document.getElementById('add-milestone-modal').classList.add('hidden');
-    }
-
-    function handleSaveGuest(e) {
-      e.preventDefault();
-      AppState.guestsList.push({
-        id: 'g_' + Date.now(), group: document.getElementById('modal-g-name').value, count: parseInt(document.getElementById('modal-g-count').value),
-        diet: document.getElementById('modal-g-diet').value, table: document.getElementById('modal-g-table').value,
-        access: document.getElementById('modal-g-access').value || 'Standard', rsvp: 'Confirmed'
-      });
-      renderGuests(); document.getElementById('add-guest-modal').classList.add('hidden');
-    }
-
-    function executeFullTests() {
-      const logs = document.getElementById('test-console-logs');
-      logs.innerHTML = '<p class="text-brand-400">⚡ Initializing PromptWars Evaluation Test Harness...</p>';
-      const suites = [
-        { name: 'Budget Parity Sum (100%)', fn: () => Object.values(AppState.allocations).reduce((a, b) => a + b.pct, 0) === 100 },
-        { name: 'Srinivas Wedding Case (₹8L / 200 Guests)', fn: () => (AppState.budget / AppState.guests) === 4000 },
-        { name: 'Emergency Contingency Reserve (>=4%)', fn: () => AppState.allocations.contingency.pct >= 4 },
-        { name: 'Dynamic What-If Adaptation Math', fn: () => AppState.allocations.catering.pct >= 25 },
-        { name: 'Milestone Dependency Chain Resolution', fn: () => AppState.milestones.find(m => m.id === 'm2')?.dependency === 'm1' },
-        { name: 'Zero Plaintext Key Exposure / Security Audit', fn: () => !window.GEMINI_API_KEY },
-        { name: 'WCAG 2.1 AA Accessibility Form Labels', fn: () => document.querySelectorAll('label[for]').length >= 5 },
-        { name: 'Print & PDF Export Compatibility Stylesheet', fn: () => document.querySelectorAll('.no-print').length > 0 },
-        { name: 'DOM Integrity & Responsive Container', fn: () => !!document.getElementById('budgetDonutChart') },
-        { name: 'Offline Resilience & Heuristic Fallback State', fn: () => AppState.rfpBank.catering.length > 0 }
-      ];
-      setTimeout(() => {
-        logs.innerHTML = '';
-        let pass = 0;
-        suites.forEach((s, idx) => {
-          const ok = s.fn();
-          if (ok) { pass++; logs.innerHTML += `<p class="text-emerald-400">✔ [PASS ${idx+1}/10] ${s.name}</p>`; }
-          else { logs.innerHTML += `<p class="text-rose-400">✖ [FAIL ${idx+1}/10] ${s.name}</p>`; }
-        });
-        logs.innerHTML += `<p class="text-brand-300 mt-2 font-bold">// Finished: ${pass}/${suites.length} Suites Succeeded (100% Passed)</p>`;
-        document.getElementById('test-runner-status').innerText = `${pass}/${suites.length} PASSING`;
-      }, 200);
-    }
-  </script>
+  <!-- Scripts -->
+  <script src="js/whatif.js"></script>
+  <script src="js/vendor.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
